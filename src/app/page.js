@@ -35,10 +35,10 @@ export default function Homepage(){
                 <hr/>
                 <div className="row">
                     <div className="col-6" >
-                        <Image className="img-fluid rounded" alt="products" src="https://images.meesho.com/images/products/408069436/blyg8_1200.jpg" width={"75%"} />
+                        <Image className="img-fluid rounded" alt="products" src="/pexels-cottonbro-4068314.jpg" width={"75%"} />
                     </div>
                     <div className="col-6">
-                        <Image className="img-fluid rounded" alt="carasul" src="https://images.meesho.com/images/products/456299065/9qrmq_512.webp" width={"75%"} />
+                        <Image className="img-fluid rounded" alt="carasul" src="public/pexels-ivan-samkov-7621020.jpg" width={"75%"} />
                     </div>
                 </div>
             </div>
