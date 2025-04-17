@@ -1,10 +1,12 @@
 "use client";
 import { createContext, useState, useEffect, useContext, use } from "react";
+import Cookies from "js-cookie";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const[orderHistory,setOrderHistory] = useState([]);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -23,6 +25,33 @@ export const CartProvider = ({ children }) => {
 
   },[]); 
 
+  useEffect(() => {
+    const userEmail = Cookies.get("userEmail");
+    if (userEmail) {
+      const allOrders = JSON.parse(localStorage.getItem("orders")) || {};
+      if (allOrders[userEmail]) {
+        setOrderHistory(allOrders[userEmail]);
+      }
+    }
+  }, []);
+  
+
+  const placeOrder = (order) => {
+    setOrderHistory((prev) => {
+      const updated = [...prev, order];
+  
+      // ✅ Save to localStorage based on user email
+      const userEmail = Cookies.get("userEmail");
+      if (userEmail) {
+        const allOrders = JSON.parse(localStorage.getItem("orders")) || {};
+        allOrders[userEmail] = updated;
+        localStorage.setItem("orders", JSON.stringify(allOrders));
+      }
+  
+      return updated;
+    });
+  };
+  
   const removeFromCart = (id) => {
     const updatedCart = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedCart);
@@ -57,8 +86,7 @@ export const CartProvider = ({ children }) => {
   const cartCount = cartItems.length;
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, cartCount,removeFromCart,updateQuantity }}>
-
+    <CartContext.Provider value={{ cartItems, addToCart, cartCount,removeFromCart,updateQuantity,orderHistory,placeOrder }}>
       {children}
     </CartContext.Provider>
   );

@@ -4,9 +4,10 @@ import { useCart } from "./CartContext";
 import { useState } from "react";
 
 export default function Cart() {
-  const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { cartItems, removeFromCart, updateQuantity,placeOrder } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const[step,setStep] = useState(1);
+  
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
     address: '',
@@ -14,6 +15,8 @@ export default function Cart() {
     pincode: '',
   });
   const [errors, setErrors] = useState({});
+
+
 
   const validateForm = () => {
     let err = {};
@@ -25,17 +28,26 @@ export default function Cart() {
     return Object.keys(err).length === 0;
   };
 
+
+
   const handleNext = () => {
     if (step === 2) {
       if (cartItems.length === 0) return alert("Your cart is empty!");
       setStep(3);
     } else if (step === 3) {
       if (validateForm()) {
-        setStep(4);
+        const order = {
+          id: Date.now(), // or uuid
+          items: cartItems,
+          shippingInfo,
+          paymentMethod,
+          date: new Date().toLocaleString(),
+        };
+        placeOrder(order);
+        setStep(4); // Proceed to the order confirmation step
       }
     }
   };
-
   
 
   const handleCheckout = () => {
