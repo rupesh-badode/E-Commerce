@@ -45,7 +45,7 @@ export default function Header() {
     <div className="container">
       <div className="navbar navbar-expand-lg p-1">
         <div className="navbar-brand">
-          <h3><a>Shopping</a></h3>
+          <h3><a className="text-success">Shopping</a></h3>
         </div>
         <div className="collapse navbar-collapse justify-content-around" id="navbar">
           <ul className="navbar-nav gap-2">
