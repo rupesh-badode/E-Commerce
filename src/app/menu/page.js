@@ -11,6 +11,7 @@ export default function Menu({onCategoryChange,onSortChange}){
       fetch("https://fakestoreapi.com/products/categories")
       .then(res=>res.json())
       .then(data=>setCategorise(data))
+      .catch(err => console.err("Failed to fetch",err))
       },[]);
   
     useEffect(() => {

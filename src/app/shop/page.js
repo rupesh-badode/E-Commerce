@@ -106,7 +106,7 @@ export default function Shop(){
                       products.map(product => (
                       <div key={product.id} className="card col-12 col-sm-6 col-md-4 col-lg-3 m-3" draggable onDragStart={(e)=>e.dataTransfer.setData("product",JSON.stringify(product))}>
                         <div className="card-header  text-center">
-                            <Image className="img-fluid" alt={product.alt} src={product.image} width={"150"} height={"150"} />
+                            <Image className="img-fluid" alt="product" src={product.image} width={"150"} height={"150"} />
                             <div className="text-body-tertiary">{product.category}</div>
                         </div>
                         <div className="card-body">

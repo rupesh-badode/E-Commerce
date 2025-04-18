@@ -2,28 +2,21 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "../cart/CartContext";
+import { useAuth } from "../context/AuthContext";
 import Cookies from "js-cookie";
 
 export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
   const { cartCount } = useCart();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const{isLoggedIn,userEmail,logout} = useAuth();
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme") === "dark";
     setDarkMode(savedMode);
     document.body.classList.toggle("bg-dark", savedMode);
     document.body.classList.toggle("text-white", savedMode);
-
-    // ✅ check login status
-    const loginStatus = Cookies.get("isLoggedIn");
-    const email = Cookies.get("userEmail");
-    if (loginStatus === "true") {
-      setIsLoggedIn(true);
-      setUserEmail(email);
-    }
   }, []);
+
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
@@ -34,11 +27,8 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    Cookies.remove("isLoggedIn");
-    Cookies.remove("userEmail");
-    setIsLoggedIn(false);
-    setUserEmail("");
-    window.location.href = "/"; // redirect to home
+    logout();
+    window.location.href = "/"
   };
 
   return (
@@ -91,7 +81,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* 👇 Sign Up Modal — hidden if logged in */}
+
       {!isLoggedIn && (
         <div className="modal fade fw-lighter" id="modal">
           <div className="modal-dialog">
@@ -115,7 +105,7 @@ export default function Header() {
                 <button className="btn btn-primary">Sign Up</button>
                 <div>
                   Already have an account?
-                  <Link href="/signin" data-bs-dismiss="modal">Sign in</Link>
+                  <Link href="/signin"><button type="button" className="btn" data-bs-dismiss="modal" aria-label="Close">Sign In</button></Link>
                 </div>
               </div>
             </div>

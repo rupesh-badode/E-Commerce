@@ -1,11 +1,11 @@
 import { CartProvider } from "./cart/CartContext";
 import Header from "./header/page";
 import Script from 'next/script';
+import { AuthProvider } from "./context/AuthContext";
 
 <Script
   src="your-script.js"
-  strategy="beforeInteractive" // or "afterInteractive" depending on when you want it to load
-/>
+  strategy="beforeInteractive" />
 
 
 
@@ -24,6 +24,7 @@ export default function RootLayout({children}) {
         </head>
         <CartProvider>
           <body>
+            <AuthProvider>
             <header>  
               <Header/>
             </header>
@@ -33,6 +34,7 @@ export default function RootLayout({children}) {
                   {children}
                 </main>
             </section>
+            </AuthProvider>
           </body>
         </CartProvider>
 </html>

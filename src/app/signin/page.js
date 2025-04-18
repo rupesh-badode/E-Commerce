@@ -5,12 +5,13 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';  
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginForm(){
-
   const[alert,setAlert] = useState({type:"",message:""});
   const[users, setUsers] = useState([]);
   const router = useRouter();
+  const {login} = useAuth();
   
   const formik = useFormik({
     initialValues:{
@@ -42,10 +43,17 @@ export default function LoginForm(){
   },[]);
 
 
+  const handleLogin = () => {
+    // simulate login
+    const email = "john@gmail.com";
+    login(email); // sets cookies + context
+  };
+
+
   return (
     <div className='row'>
       <div className='col'>
-        <Image src='/signin-g.svg' alt='sign in' width={500} />
+        <Image src='/signin-g.svg' alt='sign in' width={500} height={300} />
       </div>
       <form className='col-6 p-3 m-3' onSubmit={formik.handleSubmit} >
         {alert.message && (
@@ -62,7 +70,7 @@ export default function LoginForm(){
           <li><input  name="Password" type='password' value={formik.values.Password} onChange={formik.handleChange} className='form-control m-1 p-1' placeholder='*****' required/> </li>
           <li className='d-flex flex-wrap'><input type='checkbox' className='form-check'/>Remember me <span className='ms-3'>Forget Password? <a href='#'>Reset it</a> </span></li>
         </ul>
-        <button type='submit' className='btn btn-primary w-100'>Sign in</button>
+        <button type='submit' onClick={handleLogin} className='btn btn-primary w-100'>Sign in</button>
       </form>
 
     </div>
