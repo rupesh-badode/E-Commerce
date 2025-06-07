@@ -3,28 +3,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "../cart/CartContext";
 import { useAuth } from "../context/AuthContext";
-import Cookies from "js-cookie";
 
 export default function Header() {
-  const [darkMode, setDarkMode] = useState(false);
   const { cartCount } = useCart();
   const{isLoggedIn,userEmail,logout} = useAuth();
 
-  useEffect(() => {
-    const savedMode = localStorage.getItem("theme") === "dark";
-    setDarkMode(savedMode);
-    document.body.classList.toggle("bg-dark", savedMode);
-    document.body.classList.toggle("text-white", savedMode);
-  }, []);
 
-
-  const toggleDarkMode = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    document.body.classList.toggle("bg-dark", newMode);
-    document.body.classList.toggle("text-white", newMode);
-    localStorage.setItem("theme", newMode ? "dark" : "light");
-  };
 
   const handleLogout = () => {
     logout();
@@ -69,11 +53,6 @@ export default function Header() {
             <span className="bi bi-cart4"></span>
             <span className="badge rounded-circle bg-danger position-absolute">{cartCount}</span>
           </Link>
-
-          <div className="form-check form-switch">
-            <input className="form-check-input" type="checkbox" id="darkModeToggle" checked={darkMode} onChange={toggleDarkMode} />
-            <label className="form-check-label" htmlFor="darkModeToggle">{darkMode ? "Dark" : "Light"}</label>
-          </div>
         </div>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">

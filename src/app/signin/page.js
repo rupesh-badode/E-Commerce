@@ -66,9 +66,7 @@ export default function LoginForm(){
         <p>Welcome back to Shopping  Enter your email to get started</p>
         <ul className='list-unstyled'>
           <li><input name='Email' type='email'  value={formik.values.Email} onChange={formik.handleChange} className='form-control m-1 p-1' placeholder='Email' required/></li>
-
           <li><input  name="Password" type='password' value={formik.values.Password} onChange={formik.handleChange} className='form-control m-1 p-1' placeholder='*****' required/> </li>
-          <li className='d-flex flex-wrap'><input type='checkbox' className='form-check'/>Remember me <span className='ms-3'>Forget Password? <a href='#'>Reset it</a> </span></li>
         </ul>
         <button type='submit' onClick={handleLogin} className='btn btn-primary w-100'>Sign in</button>
       </form>
