@@ -1,4 +1,3 @@
-// app/components/LandingPage.js
 "use client";
 import { useEffect } from "react";
 import AOS from "aos";

@@ -1,10 +1,8 @@
-import Image from "next/image";
-import LandingPage from "./components/landingPage";
+import LandingPage from "./components/LandingPage";
 
 export default function Homepage() {
   return (
     <>
-
       {/* Carousel Section */}
     <section className="container-fluid px-0">
       <div id="mainCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -63,8 +61,7 @@ export default function Homepage() {
       </div>
     </section>
 
-
-      <LandingPage/>
+    <LandingPage/>
     </>
   );
 }
