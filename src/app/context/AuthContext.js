@@ -1,38 +1,36 @@
 "use client";
+
 import { createContext, useContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebaseConfig";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
+  const [useremail,setUseremail]  = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const loginStatus = Cookies.get("isLoggedIn");
-    const email = Cookies.get("userEmail");
-    if (loginStatus === "true" && email) {
-      setIsLoggedIn(true);
-      setUserEmail(email);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if(user){
+        setCurrentUser(user);
+        setUseremail(user.email);
+        setIsLoggedIn(true);
+      }else{
+        setIsLoggedIn(false);
+        setUseremail(null);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
-  const login = (email) => {
-    Cookies.set("isLoggedIn", "true");
-    Cookies.set("userEmail", email);
-    setIsLoggedIn(true);
-    setUserEmail(email);
-  };
-
-  const logout = () => {
-    Cookies.remove("isLoggedIn");
-    Cookies.remove("userEmail");
-    setIsLoggedIn(false);
-    setUserEmail("");
+  function logout(){
+    return signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userEmail, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn,useremail,logout}}>
       {children}
     </AuthContext.Provider>
   );

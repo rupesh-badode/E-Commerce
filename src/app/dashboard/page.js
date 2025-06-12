@@ -16,7 +16,7 @@ export default function DashboardPage() {
   }, [userEmail]);
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4" style={{height:490}} >
       <h2>Order History</h2>
       {orderHistory.length === 0 ? (
         <p>No orders placed yet.</p>
