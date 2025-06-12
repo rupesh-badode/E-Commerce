@@ -15,7 +15,7 @@ Go Live :https://e-commerce-tawny-eta-11.vercel.app/
 ## 🔧 Tech Stack
 
 - Next.js
-- Tailwind CSS
+- Bootstrap
 - Firebase Authentication
 - Zustand / Redux (state management)
 - FakeStore API
